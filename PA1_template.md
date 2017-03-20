@@ -27,21 +27,10 @@ p + geom_histogram(binwidth = 500,aes(fill = ..count..)) + labs(title = "Total n
 
 ```r
 mean_total_steps <- mean(data_step_day$steps)
-mean_total_steps
-```
-
-```
-## [1] 9354.23
-```
-
-```r
 median_total_steps <- median(data_step_day$steps)
-median_total_steps
 ```
-
-```
-## [1] 10395
-```
+### Mean: 9354.2295082
+### Median: 10395
 
 ## What is the average daily activity pattern?
 ### Time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
