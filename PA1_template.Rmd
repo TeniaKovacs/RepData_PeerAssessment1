@@ -20,7 +20,7 @@ data[,"date"] <- as.Date(data$date,format = "%Y-%m-%d")
 data_step_day<-aggregate(list(steps = data$steps),by=list(date = data$date),FUN=sum,na.rm=TRUE)
 library(ggplot2)
 p <- ggplot(data_step_day, aes(steps))
-p + geom_histogram(binwidth = 500) + labs(title = "Total number of steps taken per day",x = "Steps", y = "Count")
+p + geom_histogram(binwidth = 500,aes(fill = ..count..)) + labs(title = "Total number of steps taken per day",x = "Steps", y = "Count") + scale_fill_gradient("Count", low = "blue", high = "red")
 ```
 
 #### 2. The mean and median total number of steps taken per day
@@ -37,7 +37,7 @@ median_total_steps
 
 ```{r}
 avg_step_interval<-aggregate(list(steps = data$steps),by=list(interval = data$interval),FUN=mean,na.rm=TRUE)
-plot(avg_step_interval, type = "l", col = "red", xlab = "5-minute interval", main = "Average steps in 5-minute intervals")
+plot(avg_step_interval, type = "l", col = "red", xlab = "5-minute interval", main = "Average steps in 5-minute intervals", lwd = 7)
 
 ```
 
@@ -72,7 +72,8 @@ for (i in 1:nrow(data)){
 ```{r}
 corr_data_step_day<-aggregate(list(steps = corr_data$steps),by=list(date = corr_data$date),FUN=sum,na.rm=TRUE)
 p <- ggplot(corr_data_step_day, aes(steps))
-p + geom_histogram(binwidth = 700) + labs(title = "Total number of steps taken per day with calculated values",x = "Steps", y = "Count")
+p + geom_histogram(binwidth = 700,aes(fill = ..count..)) + labs(title = "Total number of steps taken per day with calculated values",x = "Steps", y = "Count") + scale_fill_gradient("Count", low = "yellow", high = "red")
+
 
 ```
 
@@ -86,3 +87,19 @@ mean(corr_data_step_day$steps)
 median(corr_data_step_day$steps)
 ```
 ## Are there differences in activity patterns between weekdays and weekends?
+
+#### Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day. 
+```{r}
+weekdays1 <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+w_data <- data.frame(steps = corr_data$steps,interval = corr_data$interval, week = factor((weekdays(corr_data$date) %in% weekdays1), levels=c(FALSE, TRUE), labels=c("weekend", "weekday")) )
+```
+
+#### Panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+
+```{r}
+avg_step_interval_weekdays<-aggregate(list(steps = w_data$steps),by=list(week = w_data$week, interval = w_data$interval),FUN=mean,na.rm=TRUE)
+p <- ggplot(avg_step_interval_weekdays,aes(interval,steps)) + geom_line(color = "green",size=2)
+p + facet_grid(week~.,scales = "free") + labs(title = "Average number of steps taken in weekend and weekdays", x = "5-minute intervals",y = "Agerage steps")
+```
+
+#### End of the assignment.
