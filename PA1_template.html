@@ -163,6 +163,21 @@ plot(avg_step_interval, type = &quot;l&quot;, col = &quot;red&quot;, xlab = &quo
 </div>
 <div id="imputing-missing-values" class="section level2">
 <h2>Imputing missing values</h2>
+<div id="the-total-number-of-rows-with-nas" class="section level3">
+<h3>The total number of rows with NAs:</h3>
+<pre class="r"><code>na_values &lt;- sum(is.na(data))
+na_values</code></pre>
+<pre><code>## [1] 2304</code></pre>
+</div>
+<div id="strategy-for-filling-in-all-of-the-missing-values-in-the-dataset.-i-use-the-mean-for-that-5-minute-interval." class="section level3">
+<h3>Strategy for filling in all of the missing values in the dataset. I use the mean for that 5-minute interval.</h3>
+<pre class="r"><code>corr_data &lt;- data
+for (i in 1:nrow(data)){
+        if (is.na(data[i,&quot;steps&quot;])){
+                corr_data[i,&quot;steps&quot;] &lt;- avg_step_interval[which(avg_step_interval$interval == data[i,&quot;interval&quot;]),2]
+        }
+}</code></pre>
+</div>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
