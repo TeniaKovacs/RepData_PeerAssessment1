@@ -13,14 +13,20 @@ data[,"date"] <- as.Date(data$date,format = "%Y-%m-%d")
 ```
 
 ## What is mean total number of steps taken per day?
-### 1. Make a histogram of the total number of steps taken each day
+### 1. Histogram of the total number of steps taken each day
 ```{r}
 data_step_day<-aggregate(list(steps = data$steps),by=list(date = data$date),FUN=sum,na.rm=TRUE)
 library(ggplot2)
 p <- ggplot(data_step_day, aes(steps))
 p + geom_histogram(binwidth = 500) + labs(title = "Total number of steps taken per day",x = "Steps", y = "Count")
 ```
-
+### 2.The mean and median total number of steps taken per day
+```{r}
+mean_total_steps <- mean(data_step_day$steps)
+mean_total_steps
+median_total_steps <- median(data_step_day$steps)
+median_total_steps
+```
 
 ## What is the average daily activity pattern?
 
