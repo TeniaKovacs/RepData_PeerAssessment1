@@ -99,7 +99,7 @@ w_data <- data.frame(steps = corr_data$steps,interval = corr_data$interval, week
 ```{r}
 avg_step_interval_weekdays<-aggregate(list(steps = w_data$steps),by=list(week = w_data$week, interval = w_data$interval),FUN=mean,na.rm=TRUE)
 p <- ggplot(avg_step_interval_weekdays,aes(interval,steps)) + geom_line(color = "green",size=2)
-p + facet_grid(week~.,scales = "free") + labs(title = "Average number of steps taken in weekend and weekdays", x = "5-minute intervals",y = "Agerage steps")
+p + facet_grid(week~.) + labs(title = "Average number of steps taken in weekend and weekdays")
 ```
 
 #### End of the assignment.
