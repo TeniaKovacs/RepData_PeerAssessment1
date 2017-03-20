@@ -1,14 +1,10 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
 
-```{r}
+
+```r
 data <- read.csv("activity.csv")
 data[,"date"] <- as.Date(data$date,format = "%Y-%m-%d")
 ```
@@ -16,30 +12,47 @@ data[,"date"] <- as.Date(data$date,format = "%Y-%m-%d")
 ## What is mean total number of steps taken per day?
 #### 1. Histogram of the total number of steps taken each day  
 
-```{r}
+
+```r
 data_step_day<-aggregate(list(steps = data$steps),by=list(date = data$date),FUN=sum,na.rm=TRUE)
 library(ggplot2)
 p <- ggplot(data_step_day, aes(steps))
 p + geom_histogram(binwidth = 500) + labs(title = "Total number of steps taken per day",x = "Steps", y = "Count")
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
 #### 2. The mean and median total number of steps taken per day
 
-```{r}
+
+```r
 mean_total_steps <- mean(data_step_day$steps)
 mean_total_steps
+```
+
+```
+## [1] 9354.23
+```
+
+```r
 median_total_steps <- median(data_step_day$steps)
 median_total_steps
+```
+
+```
+## [1] 10395
 ```
 
 ## What is the average daily activity pattern?
 ### Time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
-```{r}
+
+```r
 avg_step_interval<-aggregate(list(steps = data$steps),by=list(interval = data$interval),FUN=mean,na.rm=TRUE)
 plot(avg_step_interval, type = "l", col = "red", xlab = "5-minute interval", main = "Average steps in 5-minute intervals")
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 
 ## Imputing missing values
