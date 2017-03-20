@@ -64,7 +64,7 @@ maxi <- avg_step_interval[which.max(avg_step_interval$steps),]
 
 ## Imputing missing values
 
-### The total number of rows with NAs: 
+#### The total number of rows with NAs: 
 
 
 ```r
@@ -76,7 +76,7 @@ na_values
 ## [1] 2304
 ```
 
-### Strategy for filling in all of the missing values in the dataset. I use the mean for that 5-minute interval.
+#### Strategy for filling in all of the missing values in the dataset. I use the mean for that 5-minute interval. The new dataset's name is corr_data what is equal to the original dataset but with the missing data filled in.
 
 ```r
 corr_data <- data
@@ -85,5 +85,36 @@ for (i in 1:nrow(data)){
                 corr_data[i,"steps"] <- avg_step_interval[which(avg_step_interval$interval == data[i,"interval"]),2]
         }
 }
+```
+
+#### Histogram of the total number of steps taken each day with calculated values.
+
+
+```r
+corr_data_step_day<-aggregate(list(steps = corr_data$steps),by=list(date = corr_data$date),FUN=sum,na.rm=TRUE)
+p <- ggplot(corr_data_step_day, aes(steps))
+p + geom_histogram(binwidth = 700) + labs(title = "Total number of steps taken per day with calculated values",x = "Steps", y = "Count")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+#### The dataset mean:
+
+```r
+mean(corr_data_step_day$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+#### The dataset median:
+
+```r
+median(corr_data_step_day$steps)
+```
+
+```
+## [1] 10766.19
 ```
 ## Are there differences in activity patterns between weekdays and weekends?
