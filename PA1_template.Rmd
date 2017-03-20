@@ -41,7 +41,12 @@ plot(avg_step_interval, type = "l", col = "red", xlab = "5-minute interval", mai
 
 ```
 
+```{r}
+maxi <- avg_step_interval[which.max(avg_step_interval$steps),]
+```
 
+#### The maximum number of steps: `r maxi[[2]]`
+#### 5 - minute interval what contains that: `r maxi[[1]]`
 ## Imputing missing values
 
 

@@ -55,6 +55,12 @@ plot(avg_step_interval, type = "l", col = "red", xlab = "5-minute interval", mai
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 
+```r
+maxi <- avg_step_interval[which.max(avg_step_interval$steps),]
+```
+
+#### The maximum number of steps: 206.1698113
+#### 5 - minute interval what contains that: 835
 ## Imputing missing values
 
 
